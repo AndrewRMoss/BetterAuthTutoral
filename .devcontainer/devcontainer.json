@@ -1,0 +1,34 @@
+{
+	"name": "Node.js & TypeScript with PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"waitFor": "onCreateCommand",
+	"updateContentCommand": "npm install",
+	"customizations": { 
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"ms-vscode-remote.remote-containers",
+				"Prisma.prisma"
+			]
+		}
+	},
+	"portsAttributes": {
+		"3000": {
+			"label": "Application",
+			"onAutoForward": "openPreview"
+		},
+		"5432": {
+			"label": "PostgreSQL",
+			"onAutoForward": "notify"
+		},
+		"5050": {
+			"label": "pgAdmin",
+			"onAutoForward": "notify"
+		}
+	},
+	"forwardPorts": [3000, 5432, 5050],
+	"postCreateCommand": "npx prisma generate"
+}
